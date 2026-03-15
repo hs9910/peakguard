@@ -199,23 +199,26 @@ Single-package repository (no monorepo/workspaces).
 Suggested structure:
 
 ```text
-palindromic-square/
-  APP_STORY.md
-  MATH.md
+peakguard/
   README.md
-  TECH_SPEC.md
-  USER_STORY.md
+  USER_GUIDE.md
+  LICENSE
   package.json
   pnpm-lock.yaml
   tsconfig.json
   vite.config.ts
   public/
     manifest.webmanifest
+  docs/
+    APP_STORY.md
+    MATH.md
+    TECH_SPEC.md
+    USER_STORY.md
+  evidence/
+    screenshots/
   src/
     app/
       App.tsx
-      routes.tsx
-    components/
     features/
       explorer/
       builder/
@@ -235,7 +238,6 @@ palindromic-square/
     worker/
       compute.worker.ts
       api.ts
-      jobs.ts
     state/
       store.ts
       slices/
@@ -244,13 +246,8 @@ palindromic-square/
         uiSlice.ts
         profileSlice.ts
     storage/
-      db.ts
       schema.ts
-      migrations.ts
       repository.ts
-    pwa/
-      service-worker.ts
-      cache-control.ts
     utils/
       encoding.ts
       timing.ts

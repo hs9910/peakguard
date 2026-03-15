@@ -103,7 +103,7 @@ export const repository = {
       // Try to open and read
       await db.projects.count();
       return { recovered: true, message: 'Database is healthy' };
-    } catch (_e) {
+    } catch {
       try {
         // Delete and recreate
         await db.delete();

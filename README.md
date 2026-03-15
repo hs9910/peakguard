@@ -1,30 +1,64 @@
-# Palindromic Square Cliff (Repunits)
+# PeakGuard
 
-## Document Roles
-- `README.md` is the product-level narrative source of truth.
-- `MATH.md` is the implementation-math source of truth (definitions, theorems, algorithms, test vectors).
-- `APP_STORY.md` and `USER_STORY.md` must stay consistent with both.
+Interactive web app for the Palindromic Square Cliff.
 
-See: [MATH.md](./docs/MATH.md)
-Related: [APP_STORY.md](./docs/APP_STORY.md), [USER_STORY.md](./docs/USER_STORY.md)
+PeakGuard is a local-first PWA for exploring when squaring a number in base `2..36` preserves palindromic structure and when carry propagation breaks the mirror. It combines exact and preview computation, carry animation, gallery examples, export and share tools, and local project persistence in one self-contained app.
+
+No backend. No telemetry. Works offline after assets are cached.
+
+![PeakGuard home](./evidence/screenshots/guide-01-home-desktop.png)
+
+## Highlights
+
+- Exact and preview square computation for custom roots and canonical repunits
+- Convolution and carry visualizations, including a step-through animator
+- Guidance panel for viable sparse families vs finite-ceiling families
+- Local-only persistence with export to JSON, Markdown, SVG, PNG, and share URLs
+- Installable PWA with offline support
+
+## Quick Start
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Build the production bundle:
+
+```bash
+pnpm build
+pnpm preview
+```
+
+Run the local verification set:
+
+```bash
+pnpm verify:local
+```
+
+Run the full release gate:
+
+```bash
+pnpm verify
+```
+
+## Documentation
+
+- [USER_GUIDE.md](./USER_GUIDE.md) for the product walkthrough
+- [docs/MATH.md](./docs/MATH.md) for the implementation math and theorem details
+- [docs/TECH_SPEC.md](./docs/TECH_SPEC.md) for the app contract and architecture
+- [docs/APP_STORY.md](./docs/APP_STORY.md) for product framing
+- [docs/USER_STORY.md](./docs/USER_STORY.md) for acceptance framing
 
 ## Core Claim
-For bases `b >= 3`, the palindromic square pattern from repunits (111...1)^2 breaks at exactly n=(base-1) digits because squaring a repunit is equivalent to convolving a uniform sequence with itself, producing a triangular distribution whose peak value equals n, and when this peak meets or exceeds the base radix, it triggers a carry that propagates asymmetrically and irreversibly destroys the palindromic structure.
 
-The breakdown is not gradual deterioration but a sharp phase transition: for `b >= 3`, one digit below the threshold produces perfect symmetry, one digit above guarantees failure.
+For repunits in bases `b >= 3`, the last palindromic repunit square occurs at length `n = b - 1`. At `n = b`, the central convolution coefficient reaches the radix, carry propagation begins, and the palindromic structure breaks. Base 2 is the special case: `11_2^2 = 1001_2` is still palindromic, while `111_2^2 = 110001_2` is not.
 
-Base 2 is a special edge case:
-- `11_2^2 = 1001_2` is still palindromic (`n = 2`),
-- `111_2^2 = 110001_2` is not (`n = 3`).
+PeakGuard turns that phase transition into an interactive workflow: build a root, inspect the raw coefficients, step through carries, and export the result.
 
-This reveals that the pattern's fragility is not about computational complexity or "too many carries" in the aggregate sense, but about a single critical digit position (the center) attempting to represent a value outside the symbol set, forcing information to spill asymmetrically into neighboring positions.
+## Repository Notes
 
-For `b >= 3`, the convolution lens predicts that any similar pattern based on uniform-element multiplication will exhibit identical phase behavior: stable palindromes exist only while the central accumulation stays within single-symbol capacity, regardless of how many other positions experience carries.
-
-In base 10, the ninth repunit (111,111,111) sits exactly at the cliff edge where the central digit tries to become "9," still legal, but the tenth repunit demands a central "10," which cannot exist as a single symbol and must decompose, breaking the mirror.
-
-This implies we should search for palindromic squares by first checking whether the root's digit structure produces linear or sublinear peak growth under self-multiplication; superlinear or even linear growth with sufficient length always terminates in symmetry collapse at a computable threshold.
-
-For algorithm designers seeking to exploit palindromic properties in number-theoretic constructions, this sets an absolute ceiling on pattern availability, not a probabilistic one:
-- for `b >= 3`: beyond length `(base-1)`, the structure forbids palindromic repunit squares by necessity,
-- for `b = 2`: the last palindromic repunit square is at `n = 2`.
+- Product name: `PeakGuard`
+- Research theme: `Palindromic Square Cliff`
+- Stack: React, TypeScript, Vite, Dexie, Comlink, Playwright, Vitest
+- Generated build output and test evidence are intentionally not tracked

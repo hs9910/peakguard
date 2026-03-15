@@ -110,7 +110,6 @@ export function App(): React.ReactElement {
   const jobStatus = useStore((s) => s.jobStatus);
   const computeResult = useStore((s) => s.computeResult);
   const isApproximate = useStore((s) => s.isApproximate);
-  const _showDebugPanel = useStore((s) => s.showDebugPanel);
   const setComputeResult = useStore((s) => s.setComputeResult);
   const setJobStatus = useStore((s) => s.setJobStatus);
   const setJobId = useStore((s) => s.setJobId);

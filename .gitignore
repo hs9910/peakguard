@@ -10,10 +10,11 @@ tsconfig.tsbuildinfo
 # Test artifacts
 test-results/
 playwright-report/
+evidence/determinism-*.json
+evidence/playwright-report.json
 
 # Distribution archives
 *.tar.gz
 
 # OS files
 .DS_Store
-
